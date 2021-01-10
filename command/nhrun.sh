@@ -1,0 +1,1 @@
+nohup java -classpath .;../source;../class;../thirdpartjar/* AwpBot 9835 &

@@ -338,3 +338,9 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/class/AwpBot.class
+/class/AwpBot$InnerWebSocketServer.class
+/class/AsftPair.class
+/class/AsftOneBotMessage.class
+/class/AsftOneBotMessage$MESSAGE_MODE.class
+/class/AsftOneBotMessage$1.class
