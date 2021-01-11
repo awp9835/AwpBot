@@ -619,6 +619,34 @@ public class AsftOneBotMessage
 		return appendShare(url, title, null, null);
 	}
 
+	//location
+	public boolean appendLocation(String lat,String lon,String title, String content)
+	{
+		if(lat == null || lon == null) return false;
+		try
+		{
+			JSONObject data = new JSONObject();
+			data.put("lat",lat);
+			data.put("lon",lon);
+			if(title != null && title.trim().length() != 0) data.put("title",title);
+			if(content != null && content.trim().length() != 0) data.put("content",content);
+			JSONObject obj = new JSONObject();
+			obj.put("type","location");
+			obj.put("data",data);
+			MessageElements.put(obj);
+		}
+		catch(JSONException e)
+		{
+			System.out.println(e.toString());
+			return false;
+		}
+		return true;
+	}
+	public boolean appendLocation(String lat,String lon)
+	{
+		return appendLocation(lat, lon, null, null);
+	}
+
 	//contact
 	public boolean appendContact(String id,boolean isgroup)
 	{

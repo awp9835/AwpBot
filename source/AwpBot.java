@@ -1,78 +1,121 @@
 import java.lang.*;
 import java.util.*;
+import java.io.*;
+import java.net.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
-import java.io.*;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
+
 
 public class AwpBot
 {	
 	private class InnerWebSocketServer extends WebSocketServer
 	{
-		Queue<AsftPair<WebSocket, String> > OperationQueue;
-		Hashtable<String,Vector<WebSocket > >  LinkAlready;
-		
+		Queue<String> OperationQueue;
+		WebSocket EventWs, ApiWs;
+		String BotId;
+
 		private InnerWebSocketServer() throws UnknownHostException {}
-		public InnerWebSocketServer(int port, Queue<AsftPair<WebSocket, String> > opetationQueue) throws UnknownHostException 
+		public InnerWebSocketServer(int port, Queue<String> opetationQueue) throws UnknownHostException 
 		{
 			super(new InetSocketAddress(port));
-			LinkAlready = new Hashtable<String,Vector<WebSocket > >();
 			OperationQueue = opetationQueue;
 			System.out.println("Server start... at port：" + port + ".");
 		}
 		public void onOpen(WebSocket conn, ClientHandshake clientHandshake) 
 		{
 			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
-			System.out.println(conn.getRemoteSocketAddress() + " connected.");
 			
-			synchronized(LinkAlready) 
+			boolean valid = true;
+			String auth = null;
+			String id = null;
+			String role = null;
+			/*
+			if(!clientHandshake.hasFieldValue("Authorization")) 
 			{
-				Vector<WebSocket> target = LinkAlready.get(s);
-				if(target == null) 
+				valid = false;
+			}
+			else
+			{
+				auth = clientHandshake.getFieldValue("Authorization");
+				if(auth == null || !auth.trim().equals("Bearer " + token)) valid = false;		
+			}
+			*/
+
+			if(!clientHandshake.hasFieldValue("X-Self-ID")) 
+			{
+				valid = false;	
+			}
+			else
+			{
+				id = clientHandshake.getFieldValue("X-Self-ID");
+				if(id == null || id.trim().length() == 0) valid = false;
+			}
+
+			if(!clientHandshake.hasFieldValue("X-Client-Role")) 
+			{
+				valid = false;	
+			}
+			else
+			{
+				role = clientHandshake.getFieldValue("X-Client-Role");
+				if(role == null) valid = false;	
+				else switch(role.trim())
 				{
-					//新的连接
-					Vector<WebSocket> nar = new Vector<WebSocket>(0);
-					nar.add(conn);
-					LinkAlready.put(s,nar);
-					return;
-				}
-				else if(target.size() >= 30) //每个IP最多连接30个ws
-				{
-					System.out.println("Connect limit : 30.");
-					WebSocket ws0 = target.get(0);
-					target.add(conn);
-					if(ws0 != null)ws0.close();					
-				}
-				else
-				{
-					target.add(conn);
+				case "Event":
+				case "API":
+				case "Universal":
+					break;
+				default:
+					valid = false;
+					break;
 				}
 			}
+
+			if(valid) 
+			{
+				System.out.println(conn.getRemoteSocketAddress() + " connected.");
+				synchronized(this)
+				{
+					BotId = id.trim();
+					switch(role.trim())
+					{
+					case "Event":
+						if(EventWs != null) EventWs.close();
+						EventWs = conn;
+						break;
+					case "API":
+						if(ApiWs != null) ApiWs.close();
+						ApiWs = conn;
+						break;
+					default:
+					case "Universal":
+						if(EventWs != null)  EventWs.close();
+						if(ApiWs != null && ApiWs != EventWs) ApiWs.close();
+						EventWs = conn;
+						ApiWs = conn;
+						break;
+					}
+				}
+			}
+			else 
+			{
+				System.out.println(conn.getRemoteSocketAddress() + ": invalid connect.");
+				conn.close();
+			}	
 		}
 		public void onClose(WebSocket conn, int code, String reason, boolean remote) 
 		{
 			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
 			System.out.println(conn.getRemoteSocketAddress() + " closed.");
-			synchronized(LinkAlready) 
-			{
-				Vector<WebSocket> target = LinkAlready.get(s);
-				if(target == null) return;
-				target.remove(conn);
-				if(target.isEmpty())
-				{
-					LinkAlready.remove(s);
-				}
-			}
 		}
 		public void onMessage(WebSocket conn, String message) 
 		{
-			OperationQueue.offer(new AsftPair<WebSocket, String>(conn,message));
+			OperationQueue.offer(message);
 		}
 		public void onError(WebSocket conn, Exception e) 
 		{
@@ -88,26 +131,20 @@ public class AwpBot
 	}
 	
 
-	ConcurrentLinkedQueue<AsftPair<WebSocket, String> > EventQueue;
+	ConcurrentLinkedQueue<String>  EventQueue;
 	InnerWebSocketServer Server;
 	Vector<AwpBotComponent> Components;
-	boolean AutoSave = false;
 
-
-	public void start()
+	private void start()
 	{
 		Server.start();
 	}
 	public AwpBot(int port) throws UnknownHostException
 	{
-		EventQueue = new ConcurrentLinkedQueue<AsftPair<WebSocket, String> >();
+		EventQueue = new ConcurrentLinkedQueue<String>();
 		Server = new InnerWebSocketServer(port,EventQueue);
 	}
-	public Queue<AsftPair<WebSocket, String> > getEventQueue()
-	{
-		return EventQueue;
-	}
-	
+
 	//real main
 	public static void main2(String args[]) throws InterruptedException,UnknownHostException
 	{
@@ -126,19 +163,19 @@ public class AwpBot
 		}
 		botserver.start();
 		botserver.load(); 
-		Queue<AsftPair<WebSocket, String> > EventQueue = botserver.getEventQueue();
+		Queue<String> EventQueue = botserver.EventQueue;
 		int cnt = 0;
 		while(true)
 		{
-			AsftPair<WebSocket, String> cop = EventQueue.poll();
-			if(cop == null) 
+			String event = EventQueue.poll();
+			if(event == null) 
 			{
 				Thread.sleep​(1);
 				cnt ++;
 				if(cnt >= 1000 * 3600 * 24) //save data every day
 				{
 					cnt = 0;
-					if(botserver.AutoSave) botserver.save();
+					botserver.save();
 				}
 				if(cnt % 900000 == 450000 ) //force GC every quarter
 				{
@@ -151,7 +188,7 @@ public class AwpBot
 				//handle messages by every component
 				for(AwpBotComponent comp:botserver.Components)
 				{
-					String command = comp.handle(cop.First,cop.Second);
+					String command = comp.handle(event, botserver);
 					if(command == null) continue;
 					else if(command.equals("continue")) continue;
 					else if(command.equals("intercept")) break;
@@ -176,7 +213,6 @@ public class AwpBot
 				}
 				cnt += 1000; //+1s
 			}
-			
 		}
 	}
 
@@ -192,7 +228,7 @@ public class AwpBot
 		}
 	}
 
-	public void save()
+	private void save()
 	{
 		for(AwpBotComponent comp:Components)
 		{
@@ -201,7 +237,7 @@ public class AwpBot
 			else System.out.println(comp.getComponentName() + " save failed.");
 		}
 	}
-	public void load()
+	private void load()
 	{
 		if(Components == null)
 		{
@@ -217,6 +253,19 @@ public class AwpBot
 			else System.out.println(comp.getComponentName() + " load with exception.");
 		}
 
+	}
+
+	public String getBotId() 
+	{
+		return Server.BotId;
+	}
+	public WebSocket getApiWs() 
+	{
+		return Server.ApiWs;
+	}
+	public WebSocket getEventWs() 
+	{
+		return Server.EventWs;
 	}
 
 	//test main

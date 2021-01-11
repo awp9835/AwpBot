@@ -1,0 +1,171 @@
+import java.lang.*;
+import java.util.*;
+import java.net.*;
+import java.io.*;
+import org.json.*;
+import org.java_websocket.WebSocket;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.WebSocketServer;
+
+
+public class AsftInt
+{
+	public static int parseInt(String s);
+}
+public interface AwpBotComponent
+{
+	public boolean save(); //return succeed
+	public boolean load(); //return no except
+	public String handle(String event, AwpBot bot); //return command string
+	public String getComponentName();
+}
+public class AsftPair <T1,T2> implements Serializable
+{
+	public T1 First;
+	public T2 Second;
+	public T1 first();
+	public T2 second();
+	public AsftPair(T1 t1,T2 t2);
+}
+
+
+public class AwpBot
+{	
+	private class InnerWebSocketServer extends WebSocketServer;
+	
+	InnerWebSocketServer Server;
+	ConcurrentLinkedQueue<String> EventQueue;
+	Vector<AwpBotComponent> Components;
+
+	
+
+	private void start();
+	private void save();
+	private void load();
+
+	public AwpBot(int port) throws UnknownHostException;
+
+	public String getBotId();
+	public WebSocket getApiWs();
+	public WebSocket getEventWs();
+
+	public static void main(String args[]) throws InterruptedException,UnknownHostException;
+	public static void sendMessage(WebSocket ws,String s);
+	
+	
+
+	Set components save at save() and AwpBotComponent.save();
+	Set components load at load() and AwpBotComponent.load();
+	Set command strings at main(String args[]).while[0].else[0].for[0] and AwpBotComponent.handle(WebSocket ws, String message);
+	Set authorization InnerWebSocketServer.onOpen();
+}
+
+public class AsftOneBotMessage
+{
+	public static boolean paraIsTrue(String str);
+
+
+	public static AsftOneBotMessage createFromText(String text);
+	public static AsftOneBotMessage createFromCqString(String cqstr);
+	public static AsftOneBotMessage createFromJsonString(String js);
+	public static AsftOneBotMessage createEmpty();
+
+
+	public String toString();
+	public String toCqString();
+	public String toJsonString();
+
+
+	public boolean appendAsftOneBotMessage(AsftOneBotMessage secodary);
+	public boolean appendCqString(String cqstr);
+	public boolean appendJsonString(String jstr);
+	public boolean appendJsonObject(JSONObject obj);
+
+	public boolean appendText(String text);
+	public boolean appendFace(String id);
+	public boolean appendFace(int id);
+
+	public boolean appendPicture(String file,String url,int timeout,boolean cache,boolean proxy,boolean flash);
+
+	public boolean appendPicture(String file,int timeout,boolean cache,boolean proxy,boolean flash);
+	public boolean appendPicture(String file,int timeout,boolean cache,boolean proxy);
+	public boolean appendPicture(String file,int timeout);
+	public boolean appendPicture(String file);
+	public boolean appendFlashPicture(String file);
+
+	public boolean appendPicture(String file,String url);
+	public boolean appendFlashPicture(String file,String url);
+
+	public boolean appendRecord(String file,String url,int timeout,boolean cache,boolean proxy,boolean magic);
+
+	public boolean appendRecord(String file,int timeout,boolean cache,boolean proxy,boolean magic);
+	public boolean appendRecord(String file,int timeout,boolean cache,boolean proxy);
+	public boolean appendRecord(String file,int timeout);
+	public boolean appendRecord(String file);
+	public boolean appendMagicRecord(String file);
+
+	public boolean appendRecord(String file,String url);
+	public boolean appendMagicRecord(String file,String url);
+
+
+	public boolean appendVideo(String file,String url,int timeout,boolean cache,boolean proxy);
+
+	public boolean appendVideo(String file,int timeout,boolean cache,boolean proxy);
+	public boolean appendVideo(String file,int timeout);
+	public boolean appendVideo(String file);
+
+	public boolean appendVideo(String file,String url);
+
+
+	public boolean appendAt(String target);
+	public boolean appendNoParaType(String type);  //rps,dice,shake
+
+	public boolean appendPoke(String type,String id);
+	public boolean appendPoke(int type, int id);
+
+	public boolean appendAnonymous(String target,boolean ignore);
+
+	public boolean appendShare(String url,String title, String content, String image);
+	public boolean appendShare(String url,String title);
+
+	public boolean appendLocation(String lat,String lon,String title, String content);
+	public boolean appendLocation(String lat,String lon);
+
+	public boolean appendContact(String id,boolean isgroup);
+
+	public boolean appendMusic(String type, String id);
+	public boolean appendMusic(String url, String audio, String title, String content, String image);
+	public boolean appendMusic(String url, String audio, String title);
+
+
+	public boolean appendReply(String id);
+	public boolean appendForward(String id);
+
+	public boolean appendNode(String id);
+	public boolean appendNode(String user_id,String nickname, String content);
+	public boolean appendNode(String user_id, String nickname, AsftOneBotMessage content);
+	public boolean appendCodeMessage(String type, String data);  //json,xml
+
+
+	public int length();
+
+	public Vector<String> getElementTypeVector();
+	public String getFirstElementType();
+	public String getLastElementType();
+	public String getElementType(int index);
+
+
+	public Vector<Integer> getIndexVectorOf(String type);
+	public int getFirstIndexOf(String type)
+	public int getLastIndexOf(String type)
+
+
+	public Vector<String> getTextVector()
+	public String getText(int index)
+
+
+	public String getElementDataValue(int index,String data_key);
+	public Vector<String> getElementDataValueVector(String type, String data_key);
+	public Vector<String> getElementDataValueVector(String data_key);
+	public Vector<String> getElementDataValueVector(Vector<Integer> index_vct, String data_key);
+}
