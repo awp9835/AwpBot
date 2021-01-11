@@ -24,12 +24,12 @@ public class AwpBot
 			super(new InetSocketAddress(port));
 			LinkAlready = new Hashtable<String,Vector<WebSocket > >();
 			OperationQueue = opetationQueue;
-			System.out.println("正在启动服务...端口："+port);
+			System.out.println("Server start... at port：" + port + ".");
 		}
 		public void onOpen(WebSocket conn, ClientHandshake clientHandshake) 
 		{
 			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
-			System.out.println(conn.getRemoteSocketAddress() + " 已连接");
+			System.out.println(conn.getRemoteSocketAddress() + " connected.");
 			
 			synchronized(LinkAlready) 
 			{
@@ -44,7 +44,7 @@ public class AwpBot
 				}
 				else if(target.size() >= 30) //每个IP最多连接30个ws
 				{
-					System.out.println("同一IP连接数达到上限");
+					System.out.println("Connect limit : 30.");
 					WebSocket ws0 = target.get(0);
 					target.add(conn);
 					if(ws0 != null)ws0.close();					
@@ -58,8 +58,7 @@ public class AwpBot
 		public void onClose(WebSocket conn, int code, String reason, boolean remote) 
 		{
 			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
-			System.out.println(conn.getRemoteSocketAddress() + " 已断开连接");
-			//接下来将断开的用户移除
+			System.out.println(conn.getRemoteSocketAddress() + " closed.");
 			synchronized(LinkAlready) 
 			{
 				Vector<WebSocket> target = LinkAlready.get(s);
@@ -84,14 +83,17 @@ public class AwpBot
 		}
 		public void onStart() 
 		{
-			System.out.println("服务已启动");
+			System.out.println("Server ready.");
 		}
 	}
 	
 
-	ConcurrentLinkedQueue<AsftPair<WebSocket, String> > EventQueue = null;
-	InnerWebSocketServer Server = null;
+	ConcurrentLinkedQueue<AsftPair<WebSocket, String> > EventQueue;
+	InnerWebSocketServer Server;
+	Vector<AwpBotComponent> Components;
 	boolean AutoSave = false;
+
+
 	public void start()
 	{
 		Server.start();
@@ -106,12 +108,13 @@ public class AwpBot
 		return EventQueue;
 	}
 	
+	//real main
 	public static void main2(String args[]) throws InterruptedException,UnknownHostException
 	{
-		AwpBot server = null;
+		AwpBot botserver = null;
 		try
 		{
-			server = new AwpBot(Integer.parseInt(args[0]));
+			botserver = new AwpBot(Integer.parseInt(args[0]));
 		}
 		catch(UnknownHostException e)
 		{
@@ -119,11 +122,11 @@ public class AwpBot
 		}
 		catch(Exception e)
 		{
-			server = new AwpBot(9835);
+			botserver = new AwpBot(9835);
 		}
-		server.start();
-		Queue<AsftPair<WebSocket, String> > EventQueue = server.getEventQueue();
-		server.load(); //读取数据
+		botserver.start();
+		botserver.load(); 
+		Queue<AsftPair<WebSocket, String> > EventQueue = botserver.getEventQueue();
 		int cnt = 0;
 		while(true)
 		{
@@ -132,12 +135,12 @@ public class AwpBot
 			{
 				Thread.sleep​(1);
 				cnt ++;
-				if(cnt >= 1000 * 3600 * 24) //24小时保存一次数据
+				if(cnt >= 1000 * 3600 * 24) //save data every day
 				{
 					cnt = 0;
-					if(server.AutoSave) server.save();
+					if(botserver.AutoSave) botserver.save();
 				}
-				if(cnt % 600000 == 599999 ) //一小时进行一次强制GC
+				if(cnt % 900000 == 450000 ) //force GC every quarter
 				{
 					System.gc();
 				}
@@ -145,15 +148,39 @@ public class AwpBot
 			}
 			else
 			{
-				//在这里处理消息队列
-
-				AsftOneBotMessage a;
-				cnt += 1000;
+				//handle messages by every component
+				for(AwpBotComponent comp:botserver.Components)
+				{
+					String command = comp.handle(cop.First,cop.Second);
+					if(command == null) continue;
+					else if(command.equals("continue")) continue;
+					else if(command.equals("intercept")) break;
+					else if(command.equals("break")) break;
+					else switch(command)
+					{
+					case "save":
+						botserver.save();
+						break;
+					case "reload":
+					case "load":
+						botserver.load();
+						break;
+					case "exit":
+					case "close":
+						System.out.println("Server closed.");
+						return;
+						//break;
+					default:
+						break;
+					}
+				}
+				cnt += 1000; //+1s
 			}
 			
 		}
 	}
-	public void sendMessage(WebSocket ws,String s)
+
+	public static void sendMessage(WebSocket ws,String s)
 	{
 		try
 		{
@@ -163,40 +190,46 @@ public class AwpBot
 		{
 			System.out.println(e.toString());
 		}
-		finally
-		{
-		}
 	}
+
 	public void save()
 	{
-		try 
+		for(AwpBotComponent comp:Components)
 		{
-			//在这里添加保存的代码
-		} 
-		catch (Exception e) 
-		{
-			
-        }
+			boolean result = comp.save();
+			if(result) System.out.println(comp.getComponentName() + " save succeed.");
+			else System.out.println(comp.getComponentName() + " save failed.");
+		}
 	}
 	public void load()
 	{
-		try 
+		if(Components == null)
 		{
-			//在这里添加载入的代码
-		} 
-		catch (Exception e) 
-		{
-			
+			Components = new Vector<AwpBotComponent>();
+			//add components
+			//Components.addElement(new AwpBotComponent());
 		}
+
+		for(AwpBotComponent comp:Components)
+		{
+			boolean result = comp.load();
+			if(result) System.out.println(comp.getComponentName() + " load succeed.");
+			else System.out.println(comp.getComponentName() + " load with exception.");
+		}
+
 	}
 
+	//test main
 	public static void main(String args[]) //for module test
 	{
-		AsftOneBotMessage a = AsftOneBotMessage.createFromText(null);
+		AsftOneBotMessage a = AsftOneBotMessage.createFromCqString("[CQ:face,id=178]看看我刚拍的照片[CQ:image,file=123.jpg]");
+		a.appendText("这是增加的元素");
 		System.out.println(a.toString());
 		System.out.println("");
 		System.out.println(a.toCqString());
 		System.out.println("");
 		System.out.println(a.toJsonString());
+		System.out.println("");
+		System.out.println(a.getElementDataValueVector("face","id"));
 	}
 }
