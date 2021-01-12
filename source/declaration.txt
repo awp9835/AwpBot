@@ -12,11 +12,17 @@ public class AsftInt
 {
 	public static int parseInt(String s);
 }
+public interface AwpBotInterface
+{
+	public String getBotId();
+	public WebSocket getApiWs();
+	public WebSocket getEventWs();
+}
 public interface AwpBotComponent
 {
 	public boolean save(); //return succeed
 	public boolean load(); //return no except
-	public String handle(String event, AwpBot bot); //return command string
+	public String handle(String event, AwpBotInterface bot); //return global command string
 	public String getComponentName();
 }
 public class AsftPair <T1,T2> implements Serializable
@@ -29,35 +35,41 @@ public class AsftPair <T1,T2> implements Serializable
 }
 
 
-public class AwpBot
+public class AwpBot implements AwpBotInterface, Runnable
 {	
-	private class InnerWebSocketServer extends WebSocketServer;
+	protected class InnerWebSocketServer extends WebSocketServer
+	{
+		public Queue<String> OperationQueue;
+		public WebSocket EventWs, ApiWs;
+		public String BotId;
+		public String TokenForAuthorization;
+	}
 	
-	InnerWebSocketServer Server;
-	ConcurrentLinkedQueue<String> EventQueue;
-	Vector<AwpBotComponent> Components;
+	protected InnerWebSocketServer Server;
+	protected ConcurrentLinkedQueue<String> EventQueue;
+	protected Vector<AwpBotComponent> Components;
 
-	
-
-	private void start();
-	private void save();
-	private void load();
+	protected void config();	//set components and authorization and other, except port
+	protected void startws();	//start inner websocket server 
+	protected void save();		//save components and components data
+	protected void load();		//load components data and their config
+	protected boolean excommand(String command);	//exec AwpBotComponent.handle() result and return whether continue foreach components
 
 	public AwpBot(int port) throws UnknownHostException;
 
+	@Override
 	public String getBotId();
+	@Override
 	public WebSocket getApiWs();
+	@Override
 	public WebSocket getEventWs();
+
+	@Override
+	public void run();
 
 	public static void main(String args[]) throws InterruptedException,UnknownHostException;
 	public static void sendMessage(WebSocket ws,String s);
 	
-	
-
-	Set components save at save() and AwpBotComponent.save();
-	Set components load at load() and AwpBotComponent.load();
-	Set command strings at main(String args[]).while[0].else[0].for[0] and AwpBotComponent.handle(WebSocket ws, String message);
-	Set authorization InnerWebSocketServer.onOpen();
 }
 
 public class AsftOneBotMessage

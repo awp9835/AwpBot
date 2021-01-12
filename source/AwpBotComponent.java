@@ -10,6 +10,6 @@ public interface AwpBotComponent
 {
 	public boolean save(); //return succeed
 	public boolean load(); //return no except
-	public String handle(String event,AwpBot bot); //return command string
+	public String handle(String event, AwpBotInterface bot); //return global command string
 	public String getComponentName();
 }
