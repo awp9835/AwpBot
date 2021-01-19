@@ -2,7 +2,7 @@ import java.lang.*;
 import org.json.*;
 import java.util.*;
 
-public class AsftOneBotMessage
+public final class AsftOneBotMessage
 {
 	//factory function
 	public static boolean paraIsTrue(String str)
@@ -150,6 +150,10 @@ public class AsftOneBotMessage
 		}
 	}
 	private AsftOneBotMessage(){}
+	public AsftOneBotMessage(AsftOneBotMessage src)
+	{
+		MessageElements = new JSONArray(src.MessageElements);
+	}
 
 	public static AsftOneBotMessage createFromText(String text)
 	{
@@ -248,7 +252,10 @@ public class AsftOneBotMessage
 	{
 		return MessageElements.toString();
 	}
-
+	public JSONArray toJSONArray()
+	{
+		return new JSONArray(MessageElements);
+	}
 	//append functions
 
 	//merge

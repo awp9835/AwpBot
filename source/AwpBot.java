@@ -147,6 +147,8 @@ public class AwpBot implements AwpBotInterface, Runnable
 	//real main
 	public static void main(String args[]) throws InterruptedException,UnknownHostException
 	{
+		AsftOneBotEvent ev;
+		AsftOneBotMessage m;
 		AwpBot awpbot = null;
 		try
 		{

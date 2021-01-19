@@ -72,7 +72,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 	
 }
 
-public class AsftOneBotMessage
+public final class AsftOneBotMessage
 {
 	public static boolean paraIsTrue(String str);
 
@@ -86,7 +86,7 @@ public class AsftOneBotMessage
 	public String toString();
 	public String toCqString();
 	public String toJsonString();
-
+	public JSONArray toJSONArray();
 
 	public boolean appendAsftOneBotMessage(AsftOneBotMessage secodary);
 	public boolean appendCqString(String cqstr);
