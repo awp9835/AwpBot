@@ -934,7 +934,7 @@ public abstract class AsftOneBotEvent
 		}
 
 		public boolean isFriendAddRequestEvent() {return request_type == 0;}
-		public boolean isGroupRequestAddEvent() {return request_type == 1 && sub_type == 0;}
+		public boolean isGroupAddRequestEvent() {return request_type == 1 && sub_type == 0;}
 		public boolean isGroupInviteRequestEvent() {return request_type == 1 && sub_type == 1;}
 		
 		public String getRequestType()
@@ -942,6 +942,9 @@ public abstract class AsftOneBotEvent
 			if(request_type == 0) return "friend";
 			else return "group";
 		}
+		public String getComment(){return comment;}
+		public String getFlag(){return flag;}
+
 		@Override
 		public String getSecondaryType(){return getRequestType();}
 		@Override

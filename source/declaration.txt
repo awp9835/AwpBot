@@ -17,6 +17,7 @@ public interface AwpBotInterface
 	public String getBotId();
 	public WebSocket getApiWs();
 	public WebSocket getEventWs();
+	public static boolean sendMessage(WebSocket ws,String s);
 }
 public interface AwpBotComponent
 {
@@ -68,7 +69,6 @@ public class AwpBot implements AwpBotInterface, Runnable
 	public void run();
 
 	public static void main(String args[]) throws InterruptedException,UnknownHostException;
-	public static void sendMessage(WebSocket ws,String s);
 	
 }
 

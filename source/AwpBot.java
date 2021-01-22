@@ -44,7 +44,10 @@ public class AwpBot implements AwpBotInterface, Runnable
 				else
 				{
 					auth = clientHandshake.getFieldValue("Authorization");
-					if(auth == null || !auth.trim().equals("Bearer " + TokenForAuthorization.trim())) valid = false;		
+					if(auth == null) valid = false;		
+					else if(! auth.trim().equals("Bearer " + TokenForAuthorization.trim())
+							&& ! auth.trim().equals("Token " + TokenForAuthorization.trim())
+					) valid = false;	
 				}
 			}
 
@@ -149,6 +152,8 @@ public class AwpBot implements AwpBotInterface, Runnable
 	{
 		AsftOneBotEvent ev;
 		AsftOneBotMessage m;
+		AsftOneBotApi api;
+		AwpBotComponentParent abcp;
 		AwpBot awpbot = null;
 		try
 		{
@@ -165,17 +170,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 		awpbot.run();
 	}
 
-	public static void sendMessage(WebSocket ws,String s)
-	{
-		try
-		{
-			ws.send(s);
-		}
-		catch (Exception e)
-		{
-			System.out.println(e.toString());
-		}
-	}
+
 	protected void config()
 	{
 		//Server.TokenForAuthorization = null;
@@ -184,6 +179,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 			Components = new Vector<AwpBotComponent>();
 			//add components
 			//Components.addElement(new AwpBotComponent());
+			//Components.addElement(new Component_ApiHandle());
 		}
 	}
 	protected void startws()
