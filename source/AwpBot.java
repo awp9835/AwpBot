@@ -150,10 +150,6 @@ public class AwpBot implements AwpBotInterface, Runnable
 	//real main
 	public static void main(String args[]) throws InterruptedException,UnknownHostException
 	{
-		AsftOneBotEvent ev;
-		AsftOneBotMessage m;
-		AsftOneBotApi api;
-		AwpBotComponentParent abcp;
 		AwpBot awpbot = null;
 		try
 		{
@@ -179,7 +175,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 			Components = new Vector<AwpBotComponent>();
 			//add components
 			//Components.addElement(new AwpBotComponent());
-			//Components.addElement(new Component_ApiHandle());
+			Components.addElement(new AwpBotComponentParent());
 		}
 	}
 	protected void startws()
