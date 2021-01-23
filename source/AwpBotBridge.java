@@ -7,7 +7,8 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-public class AwpBotBridge implements AwpBotComponent
+public abstract class AwpBotBridge implements AwpBotComponent
+//public class AwpBotBridge implements AwpBotComponent
 {
 	protected static class ReconnectWs extends Thread
 	{
@@ -48,7 +49,7 @@ public class AwpBotBridge implements AwpBotComponent
 		@Override
 		public void onOpen(ServerHandshake handshakedata) 
 		{
-			String role == "Unknown";
+			String role = "Unknown";
 			if(this == ApiWs) role = "API";
 			else if(this == EventWs) role = "Event";
 			else if(this == UniversalWs) role = "Universal";
@@ -57,7 +58,7 @@ public class AwpBotBridge implements AwpBotComponent
 		@Override
 		public void onClose(int code, String reason, boolean remote) 
 		{
-			String role == "Unknown";
+			String role = "Unknown";
 			if(this == ApiWs) role = "API";
 			else if(this == EventWs) role = "Event";
 			else if(this == UniversalWs) role = "Universal";
@@ -109,7 +110,7 @@ public class AwpBotBridge implements AwpBotComponent
 		public void onError(Exception e) 
 		{
 			//System.out.println(e);
-			String role == "Unknown";
+			String role = "Unknown";
 			if(this == ApiWs) role = "API";
 			else if(this == EventWs) role = "Event";
 			else if(this == UniversalWs) role = "Universal";
@@ -129,11 +130,14 @@ public class AwpBotBridge implements AwpBotComponent
 	protected volatile InnerWebSocketClient UniversalWs;
 	protected AwpBotInterface Bot;
 
+	public abstract void config();
+	/*
 	public void config()
 	{
-		setAccessToken(null);
-		setUniversalWsUri("ws://49.232.57.232:9222/ws/");
+		//setAccessToken(null);
+		//setUniversalWsUri("ws://49.232.57.232:9222/ws/");
 	}
+	*/
 	@Override
 	public boolean save(AwpBotInterface bot)
 	{
