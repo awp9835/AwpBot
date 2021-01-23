@@ -52,7 +52,7 @@ public final class AsftOneBotMessage
 			}
 			catch(JSONException e2)
 			{
-				System.out.println(e2.toString());
+				//System.out.println(e2);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ public final class AsftOneBotMessage
 				}
 				catch(JSONException e)
 				{
-					System.out.println(e.toString());
+					//System.out.println(e);
 				}
 			}
 			if(part.length == 1) //no [CQ:
@@ -117,7 +117,7 @@ public final class AsftOneBotMessage
 					}
 					catch(JSONException e)
 					{
-						System.out.println(e.toString());
+						//System.out.println(e);
 					}
 				}
 				if(part.length == 1) //no remain
@@ -146,7 +146,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 		}
 	}
 	private AsftOneBotMessage(){}
@@ -301,7 +301,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -327,7 +327,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -353,7 +353,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -411,7 +411,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -469,7 +469,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -510,7 +510,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -541,7 +541,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -568,7 +568,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -589,7 +589,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -616,7 +616,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -644,7 +644,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -671,7 +671,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -704,7 +704,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -730,7 +730,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -755,7 +755,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -776,7 +776,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -797,7 +797,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -821,7 +821,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -844,7 +844,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;
@@ -874,7 +874,7 @@ public final class AsftOneBotMessage
 		}
 		catch(JSONException e)
 		{
-			System.out.println(e.toString());
+			//System.out.println(e);
 			return false;
 		}
 		return true;

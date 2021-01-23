@@ -15,18 +15,18 @@ public class AwpBot implements AwpBotInterface, Runnable
 {	
 	protected class InnerWebSocketServer extends WebSocketServer
 	{
-		public Queue<String> OperationQueue;
-		public WebSocket EventWs, ApiWs;
-		public String BotId;
-		public String TokenForAuthorization;
+		public volatile WebSocket EventWs;
+		public volatile WebSocket ApiWs;
+		public volatile String BotId;
+		public volatile String AccessToken;
 
 		private InnerWebSocketServer() throws UnknownHostException {}
-		public InnerWebSocketServer(int port, Queue<String> opetationQueue) throws UnknownHostException 
+		public InnerWebSocketServer(int port) throws UnknownHostException 
 		{
 			super(new InetSocketAddress(port));
-			OperationQueue = opetationQueue;
 			System.out.println("Server will start at port：" + port + ".");
 		}
+		@Override
 		public void onOpen(WebSocket conn, ClientHandshake clientHandshake) 
 		{
 			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
@@ -35,7 +35,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 			String auth = null;
 			String id = null;
 			String role = null;
-			if(TokenForAuthorization != null && TokenForAuthorization.trim().length() != 0)
+			if(AccessToken != null && AccessToken.trim().length() != 0)
 			{
 				if(!clientHandshake.hasFieldValue("Authorization")) 
 				{
@@ -45,8 +45,8 @@ public class AwpBot implements AwpBotInterface, Runnable
 				{
 					auth = clientHandshake.getFieldValue("Authorization");
 					if(auth == null) valid = false;		
-					else if(! auth.trim().equals("Bearer " + TokenForAuthorization.trim())
-							&& ! auth.trim().equals("Token " + TokenForAuthorization.trim())
+					else if(! auth.trim().equals("Bearer " + AccessToken.trim())
+							&& ! auth.trim().equals("Token " + AccessToken.trim())
 					) valid = false;	
 				}
 			}
@@ -113,15 +113,17 @@ public class AwpBot implements AwpBotInterface, Runnable
 				conn.close();
 			}	
 		}
+		@Override
 		public void onClose(WebSocket conn, int code, String reason, boolean remote) 
 		{
-			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
 			System.out.println(conn.getRemoteSocketAddress() + " closed.");
 		}
+		@Override
 		public void onMessage(WebSocket conn, String message) 
 		{
-			OperationQueue.offer(message);
+			EventQueue.offer(message);
 		}
+		@Override
 		public void onError(WebSocket conn, Exception e) 
 		{
 			if( conn != null ) 
@@ -129,6 +131,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 				//System.out.println(conn.toString() + "\n" + e.toString());
 			}
 		}
+		@Override
 		public void onStart() 
 		{
 			System.out.println("WebSocket server start.");
@@ -144,7 +147,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 	public AwpBot(int port) throws UnknownHostException
 	{
 		EventQueue = new ConcurrentLinkedQueue<String>();
-		Server = new InnerWebSocketServer(port,EventQueue);
+		Server = new InnerWebSocketServer(port);
 	}
 
 	//real main
@@ -169,13 +172,14 @@ public class AwpBot implements AwpBotInterface, Runnable
 
 	protected void config()
 	{
-		//Server.TokenForAuthorization = null;
+		//Server.AccessToken = null;
+		Server.BotId = "3177469715";
 		if(Components == null)
 		{
 			Components = new Vector<AwpBotComponent>();
 			//add components
 			//Components.addElement(new AwpBotComponent());
-			Components.addElement(new AwpBotComponentParent());
+			Components.addElement(new AwpBotBridge());
 		}
 	}
 	protected void startws()
@@ -186,7 +190,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 	{
 		for(AwpBotComponent comp:Components)
 		{
-			boolean result = comp.save();
+			boolean result = comp.save(this);
 			if(result) System.out.println(comp.getComponentName() + " save succeed.");
 			else System.out.println(comp.getComponentName() + " save failed.");
 		}
@@ -196,7 +200,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 	{
 		for(AwpBotComponent comp:Components)
 		{
-			boolean result = comp.load();
+			boolean result = comp.load(this);
 			if(result) System.out.println(comp.getComponentName() + " load succeed.");
 			else System.out.println(comp.getComponentName() + " load with exception.");
 		}
@@ -283,7 +287,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 				}
 				catch(InterruptedException e)
 				{
-					System.out.println(e.toString());
+					System.out.println(e);
 				}
 				cnt ++;
 				if(cnt >= 1000 * 3600 * 24) //save data every day

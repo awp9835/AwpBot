@@ -4,12 +4,12 @@ import org.json.*;
 public class AwpBotComponentParent implements AwpBotComponent
 {
 	@Override
-	public boolean save()
+	public boolean save(AwpBotInterface bot)
 	{
 		return true;
 	}
 	@Override
-	public boolean load()
+	public boolean load(AwpBotInterface bot)
 	{
 		return true;
 	}
@@ -44,7 +44,7 @@ public class AwpBotComponentParent implements AwpBotComponent
 		}
 		catch (JSONException|NullPointerException e)
 		{
-			//System.out.println(e.toString());
+			//System.out.println(e);
 			return "break";
 		}
 	}

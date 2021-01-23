@@ -33,7 +33,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_private_msg").setAllParameters(obj);
@@ -49,7 +49,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_private_msg").setAllParameters(obj);
@@ -65,7 +65,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_private_msg").setAllParameters(obj);
@@ -81,7 +81,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_private_msg").setAllParameters(obj);
@@ -97,7 +97,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
@@ -113,7 +113,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
@@ -129,7 +129,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
@@ -145,7 +145,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
@@ -160,7 +160,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("delete_msg").setAllParameters(obj);
@@ -177,7 +177,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("send_like").setAllParameters(obj);
@@ -195,7 +195,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_kick").setAllParameters(obj);
@@ -212,7 +212,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_ban").setAllParameters(obj);
@@ -231,7 +231,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_anonymous_ban").setAllParameters(obj);
@@ -249,7 +249,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_whole_ban").setAllParameters(obj);
@@ -268,7 +268,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_admin").setAllParameters(obj);
@@ -287,7 +287,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_anonymous").setAllParameters(obj);
@@ -304,7 +304,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_card").setAllParameters(obj);
@@ -320,7 +320,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_name").setAllParameters(obj);
@@ -336,7 +336,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_leave").setAllParameters(obj);
@@ -354,7 +354,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_special_title").setAllParameters(obj);
@@ -372,7 +372,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_friend_add_request").setAllParameters(obj);
@@ -391,7 +391,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_add_request").setAllParameters(obj);
@@ -409,7 +409,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("set_group_add_request").setAllParameters(obj);
@@ -424,7 +424,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("get_msg").setAllParameters(obj);
@@ -439,7 +439,7 @@ public final class AsftOneBotApi
 		}
 		catch(NullPointerException|JSONException e)
 		{
-			System.out.println(e.toString());
+			System.out.println(e);
 			return null;
 		}
 		return new ApiRequest("get_forward_msg").setAllParameters(obj);
@@ -475,7 +475,7 @@ public final class AsftOneBotApi
 			}
 			catch(NullPointerException|JSONException e)
 			{
-				System.out.println(e.toString());
+				System.out.println(e);
 			}
 			return this;
 		}
