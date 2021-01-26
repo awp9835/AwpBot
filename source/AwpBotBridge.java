@@ -10,7 +10,7 @@ import org.java_websocket.handshake.ServerHandshake;
 public abstract class AwpBotBridge implements AwpBotComponent
 //public class AwpBotBridge implements AwpBotComponent
 {
-	protected static class ReconnectWs extends Thread
+	protected class ReconnectWs extends Thread
 	{
 		private WebSocketClient ws;
 		private int delaynms;
@@ -25,6 +25,7 @@ public abstract class AwpBotBridge implements AwpBotComponent
 			try
 			{
 				Thread.sleep(delaynms);
+				if(Bot.getBotId() != null && Bot.getBotId().trim().length() != 0) ws.addHeader("X-Self-ID", Bot.getBotId());
 				ws.reconnect();
 			}
 			catch (Exception e)
@@ -44,7 +45,7 @@ public abstract class AwpBotBridge implements AwpBotComponent
 				this.addHeader("Authorization", "Bearer " + accesstoken.trim());
 			}
 			this.addHeader("X-Client-Role", role);
-			this.addHeader("X-Self-ID", Bot.getBotId());
+			if(Bot.getBotId() != null && Bot.getBotId().trim().length() != 0) this.addHeader("X-Self-ID", Bot.getBotId());
 		}
 		@Override
 		public void onOpen(ServerHandshake handshakedata) 
@@ -116,7 +117,6 @@ public abstract class AwpBotBridge implements AwpBotComponent
 			else if(this == UniversalWs) role = "Universal";
 			System.out.println(this.getRemoteSocketAddress() + "link error. (" + role +")");
 			if(this == EventWs || this == ApiWs || this == UniversalWs) new ReconnectWs(this,5000).start();
-			if(this == EventWs || this == ApiWs || this == UniversalWs) new ReconnectWs(this,5000).start();
 		}
 	}
 
@@ -138,6 +138,29 @@ public abstract class AwpBotBridge implements AwpBotComponent
 		//setUniversalWsUri("ws://49.232.57.232:9222/ws/");
 	}
 	*/
+	public void stop()
+	{
+		WebSocketClient temp;
+		if(UniversalWs != null) 
+		{
+			temp = UniversalWs;
+			UniversalWs = null;
+			temp.close();
+		}
+		if(ApiWs != null) 
+		{
+			temp = ApiWs;
+			ApiWs = null;
+			temp.close();
+		}
+		if(EventWs != null) 
+		{
+			temp = EventWs;
+			EventWs = null;
+			temp.close();
+		}
+	}
+
 	@Override
 	public boolean save(AwpBotInterface bot)
 	{
@@ -152,14 +175,14 @@ public abstract class AwpBotBridge implements AwpBotComponent
 		{
 			if(UniversalWsUri != null)
 			{
-				UniversalWs = ApiWs = EventWs = null;
+				stop();
 				UniversalWs = new InnerWebSocketClient(UniversalWsUri,"Universal");
 				UniversalWs.connect();
 				return true;
 			}
 			else 
 			{
-				UniversalWs = ApiWs = EventWs = null;
+				stop();
 				EventWs = new InnerWebSocketClient(EventWsUri,"Event");
 				ApiWs = new InnerWebSocketClient(ApiWsUri,"API");
 				EventWs.connect();
@@ -169,7 +192,7 @@ public abstract class AwpBotBridge implements AwpBotComponent
 		}
 		catch (Exception e)
 		{
-			System.out.println(e);
+			//System.out.println(e);
 			return false;
 		}
 	}

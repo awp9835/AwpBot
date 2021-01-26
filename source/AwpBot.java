@@ -179,7 +179,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 			Components = new Vector<AwpBotComponent>();
 			//add components
 			//Components.addElement(new AwpBotComponent());
-			Components.addElement(new AwpBotBridge());
+			//Components.addElement(new AwpBotBridge_Child());
 		}
 	}
 	protected void startws()
