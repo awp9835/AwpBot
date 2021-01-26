@@ -173,7 +173,6 @@ public class AwpBot implements AwpBotInterface, Runnable
 	protected void config()
 	{
 		//Server.AccessToken = null;
-		Server.BotId = "3177469715";
 		if(Components == null)
 		{
 			Components = new Vector<AwpBotComponent>();
@@ -182,10 +181,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 			//Components.addElement(new AwpBotBridge_Child());
 		}
 	}
-	protected void startws()
-	{
-		Server.start();
-	}
+	
 	protected void save()
 	{
 		for(AwpBotComponent comp:Components)
@@ -205,6 +201,10 @@ public class AwpBot implements AwpBotInterface, Runnable
 			else System.out.println(comp.getComponentName() + " load with exception.");
 		}
 		System.out.println("Load.");
+	}
+	protected void startws()
+	{
+		Server.start();
 	}
 	protected boolean excommand(String command)
 	{

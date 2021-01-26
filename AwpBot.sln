@@ -53,7 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{5BD60E
 		source\AwpBotComponent.java = source\AwpBotComponent.java
 		source\AwpBotComponentParent.java = source\AwpBotComponentParent.java
 		source\AwpBotInterface.java = source\AwpBotInterface.java
-		source\declaration.txt = source\declaration.txt
+		source\RoughDeclaration.txt = source\RoughDeclaration.txt
 	EndProjectSection
 EndProject
 Global

@@ -1094,7 +1094,7 @@ public abstract class AsftOneBotEvent
 		}
 		catch(JSONException | NullPointerException e)
 		{
-			System.out.println(e);
+			//System.out.println(e);
 			return null;
 		}
 	}
@@ -1356,7 +1356,7 @@ public abstract class AsftOneBotEvent
 		}
 		catch(JSONException | NullPointerException e)
 		{
-			System.out.println(e);
+			//System.out.println(e);
 			return null;
 		}
 	}

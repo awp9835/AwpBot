@@ -131,13 +131,6 @@ public abstract class AwpBotBridge implements AwpBotComponent
 	protected AwpBotInterface Bot;
 
 	public abstract void config();
-	/*
-	public void config()
-	{
-		//setAccessToken(null);
-		//setUniversalWsUri("ws://49.232.57.232:9222/ws/");
-	}
-	*/
 	public void stop()
 	{
 		WebSocketClient temp;
@@ -234,6 +227,7 @@ public abstract class AwpBotBridge implements AwpBotComponent
 		AccessToken = token;
 		return this;
 	}
+	@Override
 	public String handle(String event, AwpBotInterface bot)
 	{
 		//Handle api and event here.
