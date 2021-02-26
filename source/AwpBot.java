@@ -283,7 +283,7 @@ public class AwpBot implements AwpBotInterface, Runnable
 			{
 				try
 				{
-					Thread.sleep​(1);
+					Thread.sleep(1);
 				}
 				catch(InterruptedException e)
 				{
