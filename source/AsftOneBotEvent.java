@@ -1,4 +1,3 @@
-import java.lang.*;
 import org.json.*;
 
 public abstract class AsftOneBotEvent

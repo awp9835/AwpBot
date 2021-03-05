@@ -1,4 +1,3 @@
-import java.lang.*;
 import org.java_websocket.WebSocket;
 
 public interface AwpBotInterface

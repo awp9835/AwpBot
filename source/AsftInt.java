@@ -1,4 +1,3 @@
-import java.lang.*;
 public class AsftInt
 {
 	public static int parseInt(String s)

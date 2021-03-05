@@ -1,9 +1,6 @@
-import java.lang.*;
 import java.util.*;
-import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -20,7 +17,6 @@ public class AwpBot implements AwpBotInterface, Runnable
 		public volatile String BotId;
 		public volatile String AccessToken;
 
-		private InnerWebSocketServer() throws UnknownHostException {}
 		public InnerWebSocketServer(int port) throws UnknownHostException 
 		{
 			super(new InetSocketAddress(port));
@@ -29,7 +25,6 @@ public class AwpBot implements AwpBotInterface, Runnable
 		@Override
 		public void onOpen(WebSocket conn, ClientHandshake clientHandshake) 
 		{
-			String s = conn.getRemoteSocketAddress().getAddress().getHostAddress();
 			
 			boolean valid = true;
 			String auth = null;

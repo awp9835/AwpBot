@@ -1,4 +1,3 @@
-import java.lang.*;
 import org.json.*;
 
 public final class AsftOneBotApi
@@ -9,11 +8,17 @@ public final class AsftOneBotApi
 
 	public static boolean isApiReturn(String event)
 	{
-		JSONObject obj = new JSONObject(event);
-		if(obj == null) return false;
-		if(obj.optString("status") == null) return false;
-		if(obj.optString("retcode") == null) return false;
-		return true;
+		try
+		{
+			JSONObject obj = new JSONObject(event);
+			if(obj.optString("status") == null) return false;
+			if(obj.optString("retcode") == null) return false;
+			return true;
+		}
+		catch(JSONException e)
+		{
+			return false;
+		}
 	}
 	public static boolean isApiReturn(JSONObject eventobj)
 	{
@@ -509,11 +514,17 @@ public final class AsftOneBotApi
 		protected ApiReturn(){}
 		public ApiReturn(String json)
 		{
-			JSONObject obj = new JSONObject(json);
-			if(obj == null) return;
-			status = obj.optString("status");
-			retcode = obj.optInt("retcode");
-			data = obj.optJSONObject("data");
+			try
+			{
+				JSONObject obj = new JSONObject(json);
+				status = obj.optString("status");
+				retcode = obj.optInt("retcode");
+				data = obj.optJSONObject("data");
+			}
+			catch(JSONException e)
+			{
+				return ;
+			}
 		}
 		public ApiReturn(JSONObject jsonobj)
 		{
