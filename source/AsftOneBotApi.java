@@ -457,7 +457,7 @@ public final class AsftOneBotApi
 		private String action;
 		private boolean async;
 		private boolean rate_limited;
-
+		private String echo;
 		public ApiRequest()
 		{
 			if(AutoSetAsync) setAsync();
@@ -489,7 +489,7 @@ public final class AsftOneBotApi
 		public ApiRequest unsetAsync(){async = false; return this;}
 		public ApiRequest setRateLimited(){rate_limited = true; return this;}
 		public ApiRequest unsetRateLimited(){rate_limited = false; return this;}
-
+		public ApiRequest SetEcho(String echo){this.echo = echo; return this;}
 		@Override
 		public String toString()
 		{
@@ -497,7 +497,12 @@ public final class AsftOneBotApi
 			stb.append("{\n\t\"action\":\s\"").append(action);
 			if(async) stb.append("_async");
 			if(rate_limited) stb.append("_rate_limited");
-			stb.append("\",\n\t\"params\":\s").append(parameters != null ? parameters.toString() : "null").append("\n}");
+			stb.append("\",\n\t\"params\":\s").append(parameters != null ? parameters.toString() : "null");
+			if(echo != null)
+			{
+				stb.append(",\n\t\"echo\":\s\"").append(echo).append("\"");
+			}	
+			stb.append("\n}");
 			return stb.toString();
 		}
 
@@ -511,6 +516,7 @@ public final class AsftOneBotApi
 		protected String status;
 		protected int retcode;
 		protected JSONObject data;
+		protected String echo;
 		protected ApiReturn(){}
 		public ApiReturn(String json)
 		{
@@ -520,6 +526,7 @@ public final class AsftOneBotApi
 				status = obj.optString("status");
 				retcode = obj.optInt("retcode");
 				data = obj.optJSONObject("data");
+				echo = obj.optString("echo");
 			}
 			catch(JSONException e)
 			{
@@ -532,6 +539,7 @@ public final class AsftOneBotApi
 			status = jsonobj.optString("status");
 			retcode = jsonobj.optInt("retcode");
 			data = jsonobj.optJSONObject("data");
+			echo = jsonobj.optString("echo");
 		}
 		public String getData()
 		{
@@ -548,6 +556,24 @@ public final class AsftOneBotApi
 		public int getRetcode(String key)
 		{
 			return retcode;
+		}
+		public String getEcho()
+		{
+			return echo;
+		}
+		@Override
+		public String toString()
+		{
+			StringBuilder stb = new StringBuilder(128);
+			stb.append("{\n\t\"status\":\s\"").append(status);
+			stb.append("\",\n\t\"retcode\":\s").append(retcode);
+			stb.append(",\n\t\"data\":\s").append(data != null ? data.toString() : "null");
+			if(echo != null)
+			{
+				stb.append(",\n\t\"echo\":\s\"").append(echo).append("\"");
+			}	
+			stb.append("\n}");
+			return stb.toString();
 		}
 	}
 }
