@@ -530,6 +530,8 @@ public final class AsftOneBotApi
 			}
 			catch(JSONException e)
 			{
+				status = "";
+				echo = "";
 				return ;
 			}
 		}
