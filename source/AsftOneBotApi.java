@@ -11,8 +11,8 @@ public final class AsftOneBotApi
 		try
 		{
 			JSONObject obj = new JSONObject(event);
-			if(obj.optString("status") == null) return false;
-			if(obj.optString("retcode") == null) return false;
+			if(obj.optString("status").equals("")) return false;
+			if(obj.optString("retcode").equals("")) return false;
 			return true;
 		}
 		catch(JSONException e)
@@ -23,8 +23,8 @@ public final class AsftOneBotApi
 	public static boolean isApiReturn(JSONObject eventobj)
 	{
 		if(eventobj == null) return false;
-		if(eventobj.optString("status") == null) return false;
-		if(eventobj.optString("retcode") == null) return false;
+		if(eventobj.optString("status").equals("")) return false;
+		if(eventobj.optString("retcode").equals("")) return false;
 		return true;
 	}
 	public static ApiRequest SendPrivateMessage_text(long user_id,String text)
