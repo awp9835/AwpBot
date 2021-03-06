@@ -523,10 +523,10 @@ public final class AsftOneBotApi
 			try
 			{
 				JSONObject obj = new JSONObject(json);
-				status = obj.optString("status", null);
+				status = obj.optString("status");
 				retcode = obj.optInt("retcode");
 				data = obj.optJSONObject("data");
-				echo = obj.optString("echo", null);
+				echo = obj.optString("echo");
 			}
 			catch(JSONException e)
 			{
@@ -536,10 +536,10 @@ public final class AsftOneBotApi
 		public ApiReturn(JSONObject jsonobj)
 		{
 			if(jsonobj == null) return;
-			status = jsonobj.optString("status", null);
+			status = jsonobj.optString("status");
 			retcode = jsonobj.optInt("retcode");
 			data = jsonobj.optJSONObject("data");
-			echo = jsonobj.optString("echo", null);
+			echo = jsonobj.optString("echo");
 		}
 		public String getData()
 		{
