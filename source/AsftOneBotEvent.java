@@ -1147,7 +1147,7 @@ public abstract class AsftOneBotEvent
 				.setArea(obj.optString("area"))
 				.setLevel(obj.optString("level"))
 				.setTitle(obj.optString("title"));
-				String stmp = obj.optString("role");
+				String stmp = obj.optString("role", null);
 				if(stmp != null && stmp.equals("owner")) ((GroupSender)sender).setasOwner();
 				else if(stmp != null && stmp.equals("admin")) ((GroupSender)sender).setasAdmin();
 				else ((GroupSender)sender).setasMember();
@@ -1166,7 +1166,7 @@ public abstract class AsftOneBotEvent
 			sender.setUserId(obj.optLong("user_id"))
 			.setAge(obj.optInt("age"))
 			.setNickName(obj.optString("nickname"));
-			String stmp = obj.optString("sex");
+			String stmp = obj.optString("sex", null);
 			if(stmp!= null && stmp.equals("male")) sender.setasMale();
 			else if(stmp!= null && stmp.equals("female")) sender.setasFemale();
 			else if(stmp!= null && stmp.equals("unknow")) sender.setasUnknownSex();
@@ -1205,7 +1205,7 @@ public abstract class AsftOneBotEvent
 			GroupAdminEvent gevt = new GroupAdminEvent();
 			gevt.setGroupId(obj.optLong("group_id"))
 			.setUserId(obj.optLong("user_id"));
-			String stmp = obj.optString("sub_type");
+			String stmp = obj.optString("sub_type", null);
 			if(stmp != null && stmp.equals("set")) gevt.setasSetAdminEvent();
 			else if(stmp != null && stmp.equals("unset")) gevt.setasUnsetAdminEvent();
 			evt = gevt;
@@ -1217,7 +1217,7 @@ public abstract class AsftOneBotEvent
 			gevt.setOperatorId(obj.optLong("operator_id"))
 			.setGroupId(obj.optLong("group_id"))
 			.setUserId(obj.optLong("user_id"));
-			String stmp = obj.optString("sub_type");
+			String stmp = obj.optString("sub_type", null);
 			if(stmp != null && stmp.equals("leave")) gevt.setasLeaveEvent();
 			else if(stmp != null && stmp.equals("kick")) gevt.setasKickEvent();
 			else if(stmp != null && stmp.equals("kick_me")) gevt.setasKickMeEvent();
@@ -1230,7 +1230,7 @@ public abstract class AsftOneBotEvent
 			gevt.setOperatorId(obj.optLong("operator_id"))
 			.setGroupId(obj.optLong("group_id"))
 			.setUserId(obj.optLong("user_id"));
-			String stmp = obj.optString("sub_type");
+			String stmp = obj.optString("sub_type", null);
 			if(stmp != null && stmp.equals("approve")) gevt.setasApproveEvent();
 			else if(stmp != null && stmp.equals("invite")) gevt.setasInviteEvent();
 			evt = gevt;
@@ -1243,7 +1243,7 @@ public abstract class AsftOneBotEvent
 			.setDuration(obj.optLong("duration"))
 			.setGroupId(obj.optLong("group_id"))
 			.setUserId(obj.optLong("user_id"));
-			String stmp = obj.optString("sub_type");
+			String stmp = obj.optString("sub_type", null);
 			if(stmp != null && stmp.equals("ban")) gevt.setasSetBanEvent();
 			else if(stmp != null && stmp.equals("lift_ban")) gevt.setasLiftBanEvent();
 			evt = gevt;
@@ -1279,12 +1279,12 @@ public abstract class AsftOneBotEvent
 			GroupInteractiveEvent gevt = new GroupInteractiveEvent();
 			gevt.setGroupId(obj.optLong("group_id"))
 			.setUserId(obj.optLong("user_id"));
-			String stmp = obj.optString("sub_type");
+			String stmp = obj.optString("sub_type", null);
 			if(stmp != null && stmp.equals("poke")) gevt.setasPokeEvent().setTargetId(obj.optLong("target_id"));
 			else if(stmp != null && stmp.equals("lucky_king")) gevt.setasLuckyKingEvent().setTargetId(obj.optLong("target_id"));
 			else if(stmp != null && stmp.equals("honor"))
 			{
-				stmp = obj.optString("honor_type");
+				stmp = obj.optString("honor_type", null);
 				if(stmp != null && stmp.equals("talkative")) gevt.setasLongwangEvent();
 				else if(stmp != null && stmp.equals("performer")) gevt.setasQunliaozhihuoEvent();
 				else if(stmp != null && stmp.equals("emotion")) gevt.setasKuaileyuanquanEvent();
@@ -1310,7 +1310,7 @@ public abstract class AsftOneBotEvent
 		}
 		else if(request_type.equals("group")) 
 		{
-			String stmp = obj.optString("sub_type");
+			String stmp = obj.optString("sub_type", null);
 			if(stmp != null && stmp.equals("add")) evt.setasGroupAddRequestEvent();
 			else if(stmp != null && stmp.equals("invite")) evt.setasGroupInviteRequestEvent();
 		}

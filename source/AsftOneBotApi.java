@@ -11,8 +11,8 @@ public final class AsftOneBotApi
 		try
 		{
 			JSONObject obj = new JSONObject(event);
-			if(obj.optString("status").equals("")) return false;
-			if(obj.optString("retcode").equals("")) return false;
+			if(obj.optString("status", null) == null) return false;
+			if(obj.optString("retcode", null) == null) return false;
 			return true;
 		}
 		catch(JSONException e)
@@ -23,8 +23,8 @@ public final class AsftOneBotApi
 	public static boolean isApiReturn(JSONObject eventobj)
 	{
 		if(eventobj == null) return false;
-		if(eventobj.optString("status").equals("")) return false;
-		if(eventobj.optString("retcode").equals("")) return false;
+		if(eventobj.optString("status", null) == null) return false;
+		if(eventobj.optString("retcode", null) == null) return false;
 		return true;
 	}
 	public static ApiRequest SendPrivateMessage_text(long user_id,String text)
@@ -523,25 +523,23 @@ public final class AsftOneBotApi
 			try
 			{
 				JSONObject obj = new JSONObject(json);
-				status = obj.optString("status");
+				status = obj.optString("status", null);
 				retcode = obj.optInt("retcode");
 				data = obj.optJSONObject("data");
-				echo = obj.optString("echo");
+				echo = obj.optString("echo", null);
 			}
 			catch(JSONException e)
 			{
-				status = "";
-				echo = "";
 				return ;
 			}
 		}
 		public ApiReturn(JSONObject jsonobj)
 		{
 			if(jsonobj == null) return;
-			status = jsonobj.optString("status");
+			status = jsonobj.optString("status", null);
 			retcode = jsonobj.optInt("retcode");
 			data = jsonobj.optJSONObject("data");
-			echo = jsonobj.optString("echo");
+			echo = jsonobj.optString("echo", null);
 		}
 		public String getData()
 		{
