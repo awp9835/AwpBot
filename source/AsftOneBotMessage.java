@@ -247,7 +247,7 @@ public final class AsftOneBotMessage
 		}
 		return strb.toString();
 	}
-	public String toJsonString()
+	public String toJsonArrayString()
 	{
 		return MessageElements.toString();
 	}
