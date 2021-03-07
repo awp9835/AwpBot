@@ -139,7 +139,7 @@ public final class AsftOneBotApi
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
 	}
-	public static ApiRequest SendGroupMessage_json(long group_id,JSONArray jsarr)
+	public static ApiRequest SendGroupMessage_jsarr(long group_id,JSONArray jsarr)
 	{
 		JSONObject obj = new JSONObject();
 		try
