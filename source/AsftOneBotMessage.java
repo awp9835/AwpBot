@@ -1067,4 +1067,27 @@ public final class AsftOneBotMessage
 		}
 		return vstr;
 	}
+	public AsftOneBotMessage replaceFilesByUrls()
+	{
+		for(Object elem : MessageElements)
+		{
+			try
+			{
+				JSONObject obj = (JSONObject)elem;
+				JSONObject data = obj.optJSONObject("data");
+				String url = data.optString("url", null);
+				if(!data.has("file")
+					||url == null || url.trim().length() == 0 
+					||url.trim().toLowerCase(Locale.ROOT).equals("null")
+				)continue;
+				data.put("file", url);
+				obj.put("data", data);
+			}
+			catch(NullPointerException|JSONException e)
+			{
+				continue;
+			}
+		}
+		return this;
+	}
 }
