@@ -59,13 +59,13 @@ public final class AsftOneBotApi
 		}
 		return new ApiRequest("send_private_msg").setAllParameters(obj);
 	}
-	public static ApiRequest SendPrivateMessage_json(long user_id,String json)
+	public static ApiRequest SendPrivateMessage_jsarr(long user_id,String jsarr)
 	{
 		JSONObject obj = new JSONObject();
 		try
 		{
 			obj.put("user_id",user_id);
-			obj.put("message",new JSONObject(json));
+			obj.put("message",new JSONArray(jsarr));
 			obj.put("auto_escape",false);
 		}
 		catch(NullPointerException|JSONException e)
@@ -75,13 +75,13 @@ public final class AsftOneBotApi
 		}
 		return new ApiRequest("send_private_msg").setAllParameters(obj);
 	}
-	public static ApiRequest SendPrivateMessage_json(long user_id,JSONObject json)
+	public static ApiRequest SendPrivateMessage_jsarr(long user_id,JSONArray jsarr)
 	{
 		JSONObject obj = new JSONObject();
 		try
 		{
 			obj.put("user_id",user_id);
-			obj.put("message",json);
+			obj.put("message",jsarr);
 			obj.put("auto_escape",false);
 		}
 		catch(NullPointerException|JSONException e)
@@ -123,13 +123,13 @@ public final class AsftOneBotApi
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
 	}
-	public static ApiRequest SendGroupMessage_json(long group_id,String json)
+	public static ApiRequest SendGroupMessage_jsarr(long group_id,String jsarr)
 	{
 		JSONObject obj = new JSONObject();
 		try
 		{
 			obj.put("group_id",group_id);
-			obj.put("message",new JSONObject(json));
+			obj.put("message",new JSONArray(jsarr));
 			obj.put("auto_escape",false);
 		}
 		catch(NullPointerException|JSONException e)
@@ -139,13 +139,13 @@ public final class AsftOneBotApi
 		}
 		return new ApiRequest("send_group_msg").setAllParameters(obj);
 	}
-	public static ApiRequest SendGroupMessage_json(long group_id,JSONObject json)
+	public static ApiRequest SendGroupMessage_json(long group_id,JSONArray jsarr)
 	{
 		JSONObject obj = new JSONObject();
 		try
 		{
 			obj.put("group_id",group_id);
-			obj.put("message",json);
+			obj.put("message",jsarr);
 			obj.put("auto_escape",false);
 		}
 		catch(NullPointerException|JSONException e)

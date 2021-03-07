@@ -278,6 +278,10 @@ public final class AsftOneBotMessage
 	{
 		return appendAsftOneBotMessage(AsftOneBotMessage.createFromJsonString(jstr));
 	}
+	public boolean appendJsonArrayString(String jstr)
+	{
+		return appendAsftOneBotMessage(AsftOneBotMessage.createFromJsonString(jstr));
+	}
 	//json object
 	public boolean appendJsonObject(JSONObject obj)
 	{
