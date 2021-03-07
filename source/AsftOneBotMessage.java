@@ -350,7 +350,7 @@ public final class AsftOneBotMessage
 			if(!proxy) data.put("proxy","0");
 			if(flash) data.put("type","flash");
 			JSONObject obj = new JSONObject();
-			obj.put("type","picture");
+			obj.put("type","image");
 			obj.put("data",data);
 			MessageElements.put(obj);
 		}
