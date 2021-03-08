@@ -1,1 +1,1 @@
-java -classpath .;../source;../class;../thirdpartjar/* AwpBot 9835
+java -classpath .:../source:../class:../thirdpartjar/* AwpBot 9835

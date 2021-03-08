@@ -1144,10 +1144,10 @@ public abstract class AsftOneBotEvent
 			{
 				sender = new GroupSender();
 				((GroupSender)sender).setCard(obj.optString("card"))
-				.setArea(obj.optString("area"))
-				.setLevel(obj.optString("level"))
-				.setTitle(obj.optString("title"));
-				String stmp = obj.optString("role", null);
+				.setArea(jsd.optString("area"))
+				.setLevel(jsd.optString("level"))
+				.setTitle(jsd.optString("title"));
+				String stmp = jsd.optString("role", null);
 				if(stmp != null && stmp.equals("owner")) ((GroupSender)sender).setasOwner();
 				else if(stmp != null && stmp.equals("admin")) ((GroupSender)sender).setasAdmin();
 				else ((GroupSender)sender).setasMember();
@@ -1163,10 +1163,10 @@ public abstract class AsftOneBotEvent
 		if(jsd!= null)
 		{
 			if(sender == null) sender = new Sender();	
-			sender.setUserId(obj.optLong("user_id"))
-			.setAge(obj.optInt("age"))
-			.setNickName(obj.optString("nickname"));
-			String stmp = obj.optString("sex", null);
+			sender.setUserId(jsd.optLong("user_id"))
+			.setAge(jsd.optInt("age"))
+			.setNickName(jsd.optString("nickname"));
+			String stmp = jsd.optString("sex", null);
 			if(stmp!= null && stmp.equals("male")) sender.setasMale();
 			else if(stmp!= null && stmp.equals("female")) sender.setasFemale();
 			else if(stmp!= null && stmp.equals("unknow")) sender.setasUnknownSex();
