@@ -107,13 +107,6 @@ public abstract class AwpBotBridge implements AwpBotComponent
 		@Override
 		public void onError(Exception e) 
 		{
-			//System.out.println(e);
-			String role = "Unknown";
-			if(this == ApiWs) role = "API";
-			else if(this == EventWs) role = "Event";
-			else if(this == UniversalWs) role = "Universal";
-			System.out.println(this.getRemoteSocketAddress() + " link error. (" + role +")");
-			if(this == EventWs || this == ApiWs || this == UniversalWs) new ReconnectWs(this,5000).start();
 		}
 	}
 
