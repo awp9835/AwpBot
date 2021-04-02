@@ -602,7 +602,7 @@ public abstract class AsftOneBotEvent
 		@Override
 		public long getGroupId(){return group_id;}
 		@Override
-		public long getTargetId(){return user_id;}
+		public long getTargetId(){return isLeaveEvent()?group_id:user_id;}
 		@Override
 		public long getOperatorId(){return operator_id;}
 
